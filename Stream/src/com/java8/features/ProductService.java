@@ -7,29 +7,29 @@ import java.util.stream.Collectors;
 
 public class ProductService {
 
-    @Autowired
+    //@Autowired
     private ProductClient client;
     /*
     * Merge two differet object list into unified object list
     */
-    public List<UnifiedProduct> getProducts(){
+     public List<UnifiedProduct> getProducts(){
         Set<Product> productDetails = client.getProducts();
         Set<ProductPrice> productPrices = client.getProductPrice();
 
         Map<String, ProductPrice> productPriceMap = productPrices.stream().collect(Collectors.toMap(ProductPrice :: getProduct_uid ,  price -> price));
         return productDetails.stream().map(details -> {
-            ProductPrice productPrice = productPriceMap.get(details.getProduct_uid());
+            ProductPrice productPrice = productPriceMap.get(details.getProductUid());
 
             UnifiedProduct unifiedProduct = new UnifiedProduct();
             unifiedProduct.setName(details.getName());
-            unifiedProduct.setProductType(details.getProduct_type());
-            unifiedProduct.setProductUid(details.getProduct_uid());
-            unifiedProduct.setUrl(details.getFull_url());
+            unifiedProduct.setProductType(details.getProductType());
+            unifiedProduct.setProductUid(details.getProductUid());
+            unifiedProduct.setUrl(details.getUrl());
             
             if (productPrice != null) {
-                unifiedProduct.setUnitPrice(productPrice.getUnit_price());
-                unifiedProduct.setUnitMesurePrice(productPrice.getUnit_price_measure());
-                unifiedProduct.setUnitMeasureAmount(productPrice.getUnit_price_measure_amount());
+                unifiedProduct.setUnitPrice(productPrice.getUnitPrice());
+                unifiedProduct.setUnitMesurePrice(productPrice.getUnitMesurePrice());
+                unifiedProduct.setUnitMeasureAmount(productPrice.getUnitMeasureAmount());
             }
             return unifiedProduct;
         }).collect(Collectors.toList());

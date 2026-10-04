@@ -6,7 +6,7 @@ public class ProductPrice {
     private Double unitMesurePrice;
     private Double unitMeasureAmount;
 
-    public String getProductUid() {
+    public String getProduct_uid() {
         return productUid;
     }
     public Double getUnitPrice() {
